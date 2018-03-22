@@ -1,9 +1,26 @@
-$("li").on("click", function() {
+$("ul").on("click", "li", function() {
   $(this).toggleClass("completed");
 });
 
-$("span").on("click", function() {
-  $(this).fadeOut(2000, function() {
-    $(this).remove();
-  });
+$("ul").on("click", "span", function(event) {
+  $(this)
+    .parent()
+    .fadeOut(500, function() {
+      $(this).remove();
+    });
+  event.stopPropagation();
+});
+
+$('input[type="text"]').on("keypress", function(event) {
+  if (event.which === 13) {
+    var todoText = $(this).val();
+    $("ul").append(
+      "<li><span><i class='fa fa-trash'></i></span> " + todoText + "</li>"
+    );
+    $(this).val("");
+  }
+});
+
+$("#yup").on("click", function() {
+  $('input[type="text"]').fadeToggle(700);
 });
